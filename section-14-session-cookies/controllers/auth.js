@@ -16,13 +16,23 @@ exports.postLogin = (req,res,next) => {
     .then(user => {
         req.session.isLoggedIn = true;
         req.session.user = user;
-        res.redirect('/');
+        req.session.save(err => {
+            console.log(err);
+            res.redirect('/');
+        })
       })
         .catch(err => {console.log("ERR IN POST LOGIN: ",err);})
     // res.setHeader('Set-Cookie', 'loggedIn=true; HttpOnly');
     // req.isLoggedIn = true;
-    // console.log("OUtside user details promise ",req.session);
     // res.redirect('/');     
+};
+
+
+exports.postLogout = (req,res,next) => {
+    req.session.destroy((err) => {
+        console.log(err);
+        res.redirect('/');
+    });
 };
 
 //  /home/shahin/Documents/New Node Course/section-14-session-cookies/views/auth/login.ejs

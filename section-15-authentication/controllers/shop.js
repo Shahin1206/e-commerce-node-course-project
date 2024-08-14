@@ -42,14 +42,13 @@ exports.getIndex = (req, res, next) => {
       });
     })
     .catch(err => {
-      console.log("ERR IN GETINDEX: ",err);
+      console.log(err);
     });
 };
 
 exports.getCart = (req, res, next) => {
-req.user
+  req.user
     .populate('cart.items.productId')
-    .execPopulate()
     .then(user => {
       const products = user.cart.items;
       res.render('shop/cart', {
@@ -76,7 +75,7 @@ exports.postCart = (req, res, next) => {
 
 exports.postCartDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
-req.user    
+  req.user
     .removeFromCart(prodId)
     .then(result => {
       res.redirect('/cart');
@@ -85,7 +84,7 @@ req.user
 };
 
 exports.postOrder = (req, res, next) => {
-req.user    
+  req.user
     .populate('cart.items.productId')
     .execPopulate()
     .then(user => {
