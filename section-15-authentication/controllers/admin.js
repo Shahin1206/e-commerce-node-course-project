@@ -2,6 +2,7 @@ const Product = require('../models/product');
 
 const validationResult = require('express-validator').validationResult;
 
+// adding hasError, validationErrors and errorMessage in all renders 
 exports.getAddProduct = (req, res, next) => {
   res.render('admin/edit-product', {
     pageTitle: 'Add Product',
